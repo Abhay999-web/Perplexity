@@ -34,33 +34,6 @@ const userSchema = new mongoose.Schema(
       avatar: String,
       bio: String,
     },
-    preferences: {
-      theme: {
-        type: String,
-        enum: ["light", "dark"],
-        default: "dark",
-      },
-      notifications: {
-        type: Boolean,
-        default: true,
-      },
-      language: {
-        type: String,
-        default: "en",
-      },
-    },
-    subscription: {
-      plan: {
-        type: String,
-        enum: ["free", "pro", "premium"],
-        default: "free",
-      },
-      active: {
-        type: Boolean,
-        default: true,
-      },
-      expiresAt: Date,
-    },
     apiKey: {
       type: String,
       unique: true,
@@ -73,7 +46,7 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) 
-    return next();
+    return;
     this.password = await bcrypt.hash(this.password, 10);
   
  
