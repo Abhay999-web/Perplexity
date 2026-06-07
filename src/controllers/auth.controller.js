@@ -67,7 +67,7 @@ export async function register(req, res) {
 export async function login(req, res) {
     const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email }) .select("+password") /* password ko explicitly select krna padta hai kyuki humne model me select:false kiya hua hai */
+    const user = await userModel.findOne({ email }).select("+password") /* password ko explicitly select krna padta hai kyuki humne model me select:false kiya hua hai */
 
     if (!user) {
         return res.status(400).json({
@@ -95,18 +95,32 @@ export async function login(req, res) {
         id: user._id,
         username: user.username,
         email: user.email
-    },process.env.JWT_SECRET, { expiresIn: "7d" })
+    }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
-    res.cookie("token", token).json({
-         message: "Login successful",
+      console.log("Login Success Response Sending");
+    console.log({
+        id: user._id,
+        username: user.username,
+        email: user.email
+    });
+
+    res
+        .cookie("token", token, {
+            httpOnly: true,
+            sameSite: "lax",
+        })
+        .status(200)
+        .json({
+            message: "Login successful",
             success: true,
-            user:{
+            user: {
                 id: user._id,
-                username: user.username,    
-                email: user.email
-            }
-        
-    })
+                username: user.username,
+                email: user.email,
+            },
+        });
+
+        console.log("Login Successful, Token");
 }
 
 /* 
@@ -117,7 +131,7 @@ export async function login(req, res) {
 
 */
 
-export async function getMe(req,res){
+export async function getMe(req, res) {
 
     const userId = req.user.id;
 
@@ -126,7 +140,7 @@ export async function getMe(req,res){
         return res.status(404).json({
             message: "User not found",
             success: false,
-            err: "User not found"   
+            err: "User not found"
         })
     }
     res.status(200).json({
@@ -135,9 +149,9 @@ export async function getMe(req,res){
         user
     })
 
-    
 
-    
+
+
 }
 
 

@@ -1,14 +1,22 @@
 import "dotenv/config"
 import app from "./src/app.js";
 import connectToDb from "./src/config/db.js";
-import { testAi } from "./src/services/ai.service.js";
+
 
 
 const PORT = process.env.PORT || 3000;
 
 
 connectToDb()
-testAi()
+
+
+.catch((err)=>{
+    console.log("Failed to connect to database", err)
+    process.exit(1)
+})
+
+
+
 
 
 app.listen(PORT,()=>{
