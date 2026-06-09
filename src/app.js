@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth.route.js";
 import morgan from "morgan";
 import cors from "cors";
+import chatRouter from "./routes/chat.route.js";
 
 const app = express();
 
@@ -17,16 +18,20 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
 }))
 
-// app.use('/auth', authRouter);
-
-
-app.use("/api/auth", authRouter);
-
-
 //For Check =>
 app.get("/", (req, res) => {
     res.json({ message: "Server is Running" })
 })
+
+
+// app.use('/auth', authRouter) =>> authentication
+app.use("/api/auth", authRouter);
+
+
+// app.use('/chat', chatRouter); =>> for chats
+app.use("/api/chats", chatRouter)
+
+
 
 
 export default app;
