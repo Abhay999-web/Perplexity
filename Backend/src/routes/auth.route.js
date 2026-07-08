@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { register, verifyEmail, login, getMe } from '../controllers/auth.controller.js';
+import { register, verifyEmail, login, getMe, logout } from '../controllers/auth.controller.js';
 import { validateRegister, loginValidator } from '../validator/auth.validator.js';
 import {authUser} from "../middleware/auth.middleware.js"
 
@@ -26,17 +26,11 @@ authRouter.post("/login", loginValidator, login)
 
 
 /* 
-    @route Get api/auth/get-me
+    @route GET api/auth/get-me
     @desc Route to get logged in User's details
     @access Private
-
 */
 authRouter.get("/get-me", authUser, getMe)
-    
-
-    
-
-
 
 /* 
     @route GET api/auth/verify-email
@@ -45,6 +39,16 @@ authRouter.get("/get-me", authUser, getMe)
     @query { token }
 */
 authRouter.get("/verify-email", verifyEmail)
+
+
+
+/* 
+@route POST api/auth/logout
+@desc Route for User Logout
+@access Public
+*/
+
+authRouter.post("/logout", logout )
 
 
 

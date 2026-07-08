@@ -24,8 +24,17 @@ export async function login({email, password}){
 
 
 export async function getMe(){
-    const response = await api.get("/api/auth/get-me")
+    const response = await api.get("/api/auth/get-me",{
+
+        withCredentials: true
+    })
     
     
+    return response.data
+}
+
+
+export async function logout(){
+    const response = await api.post("/api/auth/logout")
     return response.data
 }

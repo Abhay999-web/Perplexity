@@ -25,6 +25,16 @@ const userSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        credits: {   // for credits management
+            type: Number,
+            required: true,
+            min: 0,
+            default: 10 // only 10 credits for free users
+        },
+        creditRefillTime: {
+            type: Date,
+            default: null // null means no refill timer active
+        }
     },
     { timestamps: true }
 );

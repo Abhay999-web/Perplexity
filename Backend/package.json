@@ -2,6 +2,7 @@
   "dependencies": {
     "@langchain/google-genai": "^2.1.31",
     "@langchain/mistralai": "^1.1.0",
+    "@tavily/core": "^0.7.6",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
@@ -12,8 +13,10 @@
     "langchain": "^1.4.2",
     "mongoose": "^9.6.2",
     "morgan": "^1.11.0",
+    "node-cron": "^4.5.0",
     "nodemailer": "^8.0.9",
-    "socket.io": "^4.8.3"
+    "socket.io": "^4.8.3",
+    "zod": "^4.4.3"
   },
   "name": "perplexity",
   "version": "1.0.0",

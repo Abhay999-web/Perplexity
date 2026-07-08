@@ -1,22 +1,20 @@
-import React,{useEffect} from 'react'
-import {useSelector} from 'react-redux'
-import { useChat } from '../hooks/useChat'
+import React, { useState } from 'react'
+import Sidebar from '../../../components/dashboard/sidebar.jsx'
+import ChatArea from '../../../components/dashboard/chatArea.jsx'
 
 const Dashboard = () => {
-
-  const chat = useChat()
-
-    const {user} = useSelector(state => state.auth)
-    console.log(user)
-
-    useEffect(()=>{
-      chat.initializedSocketConnection() // Initialize the socket connection when the component mounts
-
-    },[])
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div>Dashboard</div>
-    
+    <main className='h-screen w-full bg-[#171717] flex overflow-hidden font-sans text-gray-200 antialiased selection:bg-[#2f2f2f]'>
+      
+     {/* Sidebar */}
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+      {/* Chat Area */}
+      <ChatArea sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+
+    </main>
   )
 }
 

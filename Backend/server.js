@@ -3,6 +3,7 @@ import app from "./src/app.js";
 import connectToDb from "./src/config/db.js";
 import http from "http";
 import { initSocket } from "./src/sockets/server.socket.js";
+import {startCronJobs} from "./src/services/cron.services.js" //for credits management
 
 
 
@@ -12,6 +13,7 @@ const httpServer = http.createServer(app);
 
 initSocket(httpServer);
 
+startCronJobs() // Start the cron job for daily credit reset
 connectToDb()
 
 
