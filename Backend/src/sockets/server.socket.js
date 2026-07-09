@@ -8,9 +8,10 @@ import userModel from "../models/user.model.js";
 let io;
 
 export function initSocket(httpServer) {
+    const socketOrigin = process.env.FRONTEND_URL || process.env.CLIENT_URL || "http://localhost:5173";
     io = new Server(httpServer, {
         cors: {
-            origin: "http://localhost:5173",
+            origin: socketOrigin,
             credentials: true,
         }
     });

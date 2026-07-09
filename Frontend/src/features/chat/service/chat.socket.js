@@ -1,8 +1,9 @@
 import { io } from 'socket.io-client';
 
 export function initializeSocketConnection() {
-   
-    const socket = io("http://localhost:3000", {
+    
+   a
+    const socket = io("/", {
         withCredentials: true,
         autoConnect: true
     });
@@ -14,7 +15,6 @@ export function initializeSocketConnection() {
     socket.on("connect_error", (err) => {
         console.error("Socket connection failed context:", err.message);
     });
-
 
     return socket; 
 }
