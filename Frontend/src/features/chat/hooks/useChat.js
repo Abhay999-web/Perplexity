@@ -86,7 +86,7 @@ export const useChat = () => {
                 dispatch(setCurrentChatId(tempChatId));
             }
 
-            // 🔥 Core Engine notification over active socket connection pipeline
+            
             if (socketRef.current && socketRef.current.connected) {
                 socketRef.current.emit("send_user_message", {
                     tempChatId: !chatId ? tempChatId : null,

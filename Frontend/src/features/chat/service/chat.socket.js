@@ -2,14 +2,14 @@ import { io } from 'socket.io-client';
 
 export function initializeSocketConnection() {
     
-   a
+   
     const socket = io("/", {
         withCredentials: true,
         autoConnect: true
     });
 
     socket.on("connect", () => {
-        console.log("Connected to Socket.io server securely! ID:", socket.id);
+        console.log("Connected to Socket.io server securely!");
     });
 
     socket.on("connect_error", (err) => {
