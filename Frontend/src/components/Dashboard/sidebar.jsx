@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 import { useChat } from '../../features/chat/hooks/useChat'
 import { useAuth } from '../../features/auth/hooks/useAuth'
 import { setCurrentChatId } from '../../features/chat/chat.slice'

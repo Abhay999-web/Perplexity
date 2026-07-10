@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate, Navigate } from 'react-router'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useSelector, useDispatch } from 'react-redux'
 import { setError } from '../auth.slice' 
