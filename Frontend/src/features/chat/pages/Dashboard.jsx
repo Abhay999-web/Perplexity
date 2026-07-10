@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Sidebar from '../../../components/dashboard/sidebar.jsx'
-import ChatArea from '../../../components/dashboard/chatArea.jsx'
+import Sidebar from '../../../components/Dashboard/sidebar.jsx'
+import ChatArea from '../../../components/Dashboard/chatArea.jsx'
 
 const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
