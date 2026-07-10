@@ -1,7 +1,7 @@
 import React from 'react'
-import MessageList from './messageList'
-import ChatInput from './chatInput'
-import CreditBadge from './CreditBadge'
+import MessageList from './messageList.jsx'
+import ChatInput from './chatInput.jsx'
+import CreditBadge from './CreditBadge.jsx'
 
 const ChatArea = ({ sidebarOpen, setSidebarOpen }) => {
   return (
