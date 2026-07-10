@@ -1,5 +1,5 @@
 import React from 'react'
-import MessageList from './messageList.jsx'
+import MessageList from './message.list.jsx'
 import ChatInput from './chatInput.jsx'
 import CreditBadge from './CreditBadge.jsx'
 

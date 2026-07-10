@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux' 
-import MessageBubble from './messageBubble'
+import MessageBubble from './messageBubble.jsx'
 import { RiPerplexityLine, RiCodeSSlashLine, RiCompass3Line, RiLightbulbLine, RiBookOpenLine } from "@remixicon/react"
 
 const MessageList = () => {
