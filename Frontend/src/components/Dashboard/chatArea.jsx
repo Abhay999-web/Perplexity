@@ -5,32 +5,35 @@ import CreditBadge from './CreditBadge.jsx'
 
 const ChatArea = ({ sidebarOpen, setSidebarOpen }) => {
   return (
-    <section className='flex-1 flex flex-col bg-black h-full relative overflow-hidden w-full '>
+    <section className='flex-1 flex flex-col bg-black h-full overflow-hidden w-full'>
       
-   
-      <header className='h-14 border-b border-[#2f2f2f]/30 flex items-center px-4 bg-black/90 absolute top-0 left-0 right-0 z-30 md:bg-transparent md:border-transparent'>
+      
+      <header className='shrink-0 h-14 border-b border-[#2f2f2f]/30 flex items-center px-4 bg-black/90 z-30 md:bg-transparent md:border-transparent'>
         <div className='flex items-center gap-3 w-full'>
          <button 
-  onClick={() => setSidebarOpen(!sidebarOpen)} 
-  className='md:hidden text-gray-400 hover:text-white text-xl p-1.5 rounded-lg hover:bg-[#1e1e1e] transition-all cursor-pointer'
->
-  ☰
-</button>
+            onClick={() => setSidebarOpen(!sidebarOpen)} 
+            className='md:hidden text-gray-400 hover:text-white text-xl p-1.5 rounded-lg hover:bg-[#1e1e1e] transition-all cursor-pointer'
+          >
+            ☰
+          </button>
           <div className="text-[20px] font-bold text-gray-300 select-none tracking-tight">
             Perplexity 
           </div>
-          <CreditBadge/>   {/* credit badge component to show user credits */}
+          <CreditBadge/> {{/* credit badge component to show user credits */}}
         </div>
       </header>
 
-      {/* Main Viewport Workspace Wrapper */}
-      <div className='flex-1 flex flex-col pt-20 pb-4 overflow-hidden w-full max-w-3xl mx-auto px-4 justify-between h-full'>
-        
-        {/* Dynamic Messages Thread Logger */}
-        <MessageList />
+      
+      <div className='flex-1 flex flex-col min-h-0 w-full max-w-3xl mx-auto px-4 pb-4 pt-4'>
+       
+        <div className="flex-1 overflow-y-auto min-h-0 no-scrollbar">
+          <MessageList />
+        </div>
 
-        {/* Floating Bottom Input Capsule Container */}
-        <ChatInput />
+        
+        <div className="shrink-0 pt-2">
+          <ChatInput />
+        </div>
 
       </div>
     </section>

@@ -11,8 +11,10 @@ const Dashboard = () => {
      {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* Chat Area */}
-      <ChatArea sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+    {/* Chat Area */}
+      <div className="flex-1 flex flex-col min-w-0 h-full min-h-0">
+        <ChatArea sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+      </div>
 
     </main>
   )
