@@ -19,10 +19,10 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 }))
 
-//For Check =>
-app.get("/", (req, res) => {
-    res.json({ message: "Server is Running" })
-})
+// //For Check =>
+// app.get("/", (req, res) => {
+//     res.json({ message: "Server is Running" })
+// })
 
 
 // app.use('/auth', authRouter) =>> authentication

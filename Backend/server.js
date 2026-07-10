@@ -19,7 +19,7 @@ const frontendBuildPath = path.join(__dirname, '../Frontend/dist');
 
 app.use(express.static(frontendBuildPath));
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
 
