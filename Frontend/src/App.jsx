@@ -8,7 +8,7 @@ export default function AppShell(){
 
   return (
     <ChatProvider>
-      <div className="min-h-screen bg-black text-white flex">
+      <div className="h-[100dvh] overflow-hidden bg-black text-white flex">
         <div className="hidden md:block">
           <Sidebar />
         </div>

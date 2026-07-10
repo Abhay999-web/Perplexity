@@ -6,7 +6,7 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <main className='h-screen w-full bg-[#171717] flex overflow-hidden font-sans text-gray-200 antialiased selection:bg-[#2f2f2f]'>
+    <main className='h-[100dvh] w-full bg-[#171717] flex overflow-hidden font-sans text-gray-200 antialiased selection:bg-[#2f2f2f]'>
       
      {/* Sidebar */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

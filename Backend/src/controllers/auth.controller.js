@@ -4,10 +4,27 @@ import { sendEmail } from "../services/mail.service.js";
 
 const FRONTEND_URL = process.env.FRONTEND_URL || process.env.CLIENT_URL || "http://localhost:5173";
 
+async function refillDailyCredits(user) {
+    const now = new Date();
+    const oneDayMs = 24 * 60 * 60 * 1000;
+
+    if (user.creditRefillTime) {
+        const lastRefill = new Date(user.creditRefillTime);
+        if (now - lastRefill >= oneDayMs) {
+            user.credits = 10;
+            user.creditRefillTime = now;
+            await user.save();
+        }
+    } else if (user.credits == null || user.credits < 10) {
+        user.credits = 10;
+        user.creditRefillTime = now;
+        await user.save();
+    }
+}
 
 /**
  * @desc Register a new user
- * @route POST /api/auth/register
+ * @route POST /api/auth/registera
  * @access Public
  * @body { username, email, password }
  */
@@ -105,17 +122,17 @@ export async function login(req, res) {
         })
     }
 
+    await refillDailyCredits(user);
+
     const token = jwt.sign({
         id: user._id,
         username: user.username,
     }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-    res.cookie("token", token,{
+    res.cookie("token", token, {
         httpOnly: true,
         sameSite: "lax",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-
-
     })
 
     res.status(200).json({
@@ -124,7 +141,9 @@ export async function login(req, res) {
         user: {
             id: user._id,
             username: user.username,
-            email: user.email
+            email: user.email,
+            credits: user.credits,
+            creditRefillTime: user.creditRefillTime
         }
     })
 
@@ -158,6 +177,8 @@ export async function getMe(req, res) {
                 err: "User not found"
             });
         }
+
+        await refillDailyCredits(user);
 
         return res.status(200).json({
             success: true,
