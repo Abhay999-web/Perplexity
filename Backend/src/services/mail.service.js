@@ -1,67 +1,38 @@
-import nodemailer from "nodemailer";
-
-const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465, 
-    secure: true,
-    
-    auth: {
-        type: "OAuth2",
-        user: process.env.GOOGLE_USER,
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN
-    },
-    
-    connectionTimeout: 20000,
-    greetingTimeout: 20000,
-    socketTimeout: 20000,
-    tls: {
-        minVersion: "TLSv1.2",
-        rejectUnauthorized: true
-    }
-});
-
-const verifyTransporter = async () => {
-    try {
-        await transporter.verify();
-        console.log("Email transporter is ready to send emails");
-    } catch (error) {
-        console.error("Email transporter verification failed:", error);
-    }
-};
-
-verifyTransporter();
+import axios from "axios";
 
 export async function sendEmail({ to, subject, html, text }) {
     try {
-        const mailOptions = {
-            from: process.env.GOOGLE_USER,
-            to,
-            subject,
-            html,
-            text
+        
+        const payload = {
+            sender: {
+                email: process.env.BREVO_SENDER_EMAIL, 
+                name: process.env.BREVO_SENDER_NAME || "Perplexity Clone"
+            },
+            to: [
+                { email: to }
+            ],
+            subject: subject,
+            htmlContent: html,
         };
 
-        const details = await transporter.sendMail(mailOptions);
-        console.log("Email sent:", details.response || details);
-        return details;
-    } catch (error) {
-        console.error("Email sending failed:", error);
+        payload.textContent = text ? text : "Please view this email in an HTML compatible email client.";
+
+        const response = await axios.post(
+            "https://api.brevo.com/v3/smtp/email",
+            payload,
+            {
+                headers: {
+                    "api-key": process.env.BREVO_API_KEY,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        console.log("Email sent successfully :", response.data);
+        return response.data;
+
+    } catch(error) {
+        console.error("Brevo API Email Error :", error.response?.data || error.message);
         throw error;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
