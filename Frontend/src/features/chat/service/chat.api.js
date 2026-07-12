@@ -1,7 +1,7 @@
     import axios from "axios";
 
     const api = axios.create({
-        baseURL: "/",
+        baseURL: "https://perplexity-ffm8.onrender.com",
         withCredentials: true,
     })
 
