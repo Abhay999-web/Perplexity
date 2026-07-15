@@ -16,13 +16,15 @@ const Login = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
- 
+  
   useEffect(() => {
-    // Clear error when component unmounts
+    dispatch(setError(null));
+    
+    
     return () => {
-      if (error) dispatch(setError(null));
+      dispatch(setError(null));
     };
-  }, [dispatch, error]);
+  }, [dispatch]);
 
 
   const handleEmailChange = (e) => {
@@ -44,7 +46,7 @@ const Login = () => {
     try {
       const payload = { email, password }
       await handleLogin(payload)
-      // only navigate when login succeeded (useAuth will throw on error)
+    
       navigate("/")
     } catch (err) {
       const backendMessage = err?.response?.data?.message || err?.message || "Login failed";
@@ -55,7 +57,6 @@ const Login = () => {
   if (!loading && user) {
     return <Navigate to="/" replace />
   }
-
 
   const shouldShowError = error && error.toLowerCase() !== "unauthorized" && error.toLowerCase() !== "no token provided"
 
