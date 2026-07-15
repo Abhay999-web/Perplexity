@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// react-router-dom se Link hata diya kyunki humein hard refresh chahiye
 import { RiMailSendLine, RiCheckDoubleLine } from "@remixicon/react";
 
 const EmailVerificationSent = ({ email }) => {
@@ -29,9 +29,13 @@ const EmailVerificationSent = ({ email }) => {
           </p>
         </div>
 
-        <Link to="/login" className="block w-full bg-[#1e1e1e] border border-[#2a2a2a] hover:bg-[#252525] text-white font-medium text-[14px] py-3 px-4 rounded-xl transition-all duration-150 cursor-pointer shadow-sm mt-4">
+      
+        <a 
+          href="/login" 
+          className="block w-full bg-[#1e1e1e] border border-[#2a2a2a] hover:bg-[#252525] text-white font-medium text-[14px] py-3 px-4 rounded-xl transition-all duration-150 cursor-pointer shadow-sm mt-4 text-center"
+        >
           Back to Login
-        </Link>
+        </a>
 
       </div>
     </div>
