@@ -2,25 +2,20 @@ import userModel from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/mail.service.js";
 
-// URL Configuration - Works on both localhost and production
 const getBackendUrl = () => {
-    if (process.env.BACKEND_URL) {
-        return process.env.BACKEND_URL;
-    }
-    return "http://localhost:3000";
+    const url = process.env.BACKEND_URL || "http://localhost:3000";
+    return url.replace(/\/$/, ""); 
 };
 
 const getFrontendUrl = () => {
-    if (process.env.FRONTEND_URL) {
-        return process.env.FRONTEND_URL;
-    }
-    return "http://localhost:5173";
+    const url = process.env.FRONTEND_URL || "http://localhost:5173";
+    return url.replace(/\/$/, ""); 
 };
 
 const BACKEND_URL = getBackendUrl();
 const FRONTEND_URL = getFrontendUrl();
 
-console.log("🔧 Config Loaded:");
+console.log("Config Loaded:");
 console.log("  BACKEND_URL:", BACKEND_URL);
 console.log("  FRONTEND_URL:", FRONTEND_URL);
 
@@ -52,7 +47,6 @@ export async function register(req, res) {
     try {
         const { username, email, password } = req.body;
 
-        // Validation
         if (!username || !email || !password) {
             return res.status(400).json({
                 message: "Username, email, and password are required",
@@ -74,18 +68,16 @@ export async function register(req, res) {
 
         const user = await userModel.create({ username, email, password });
 
-        // Generate verification token
         const emailVerificationToken = jwt.sign(
             { email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
 
-        // Build verification link
         const verifyLink = `${BACKEND_URL}/api/auth/verify-email?token=${emailVerificationToken}`;
         
-        console.log("📧 Sending verification email to:", email);
-        console.log("🔗 Verification link:", verifyLink);
+        console.log("Sending verification email to:", email);
+        console.log("Verification link:", verifyLink);
 
         try {
             await sendEmail({
@@ -107,7 +99,7 @@ export async function register(req, res) {
                     </head>
                     <body>
                         <div class="container">
-                            <h2>Welcome to Perplexity! 🚀</h2>
+                            <h2>Welcome to Perplexity!</h2>
                             <p>Hi ${username},</p>
                             <p>Thank you for signing up. To get started, please verify your email address by clicking the button below:</p>
                             <a href="${verifyLink}" class="verify-btn">Verify Email Address</a>
@@ -124,16 +116,15 @@ export async function register(req, res) {
                 text: `Welcome to Perplexity! Please verify your email by clicking: ${verifyLink}`
             });
             
-            console.log("✅ Email sent successfully to:", email);
+            console.log("Email sent successfully to:", email);
 
         } catch (emailError) {
-            console.error("❌ Email sending failed:", {
+            console.error("Email sending failed:", {
                 message: emailError.message,
                 status: emailError.response?.status,
                 data: emailError.response?.data
             });
             
-            // Delete the user if email sending fails
             await userModel.findByIdAndDelete(user._id);
             
             return res.status(500).json({
@@ -154,7 +145,7 @@ export async function register(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ Register Error:", error);
+        console.error("Register Error:", error);
         return res.status(500).json({
             success: false,
             message: "Registration failed. Please try again.",
@@ -223,7 +214,7 @@ export async function login(req, res) {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: "lax",
-            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            maxAge: 7 * 24 * 60 * 60 * 1000, 
         });
 
         return res.status(200).json({
@@ -239,7 +230,7 @@ export async function login(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ Login Error:", error);
+        console.error("Login Error:", error);
         return res.status(500).json({
             success: false,
             message: "Login failed. Please try again.",
@@ -283,7 +274,7 @@ export async function getMe(req, res) {
         });
 
     } catch (error) {
-        console.error("❌ getMe Error:", error.message);
+        console.error("getMe Error:", error.message);
         return res.status(500).json({
             success: false,
             message: "Internal server error"
@@ -422,12 +413,12 @@ export async function verifyEmail(req, res) {
         </head>
         <body>
             <div class="container">
-                <div class="icon">✓</div>
+                <div class="icon">&#10003;</div>
                 <h1>Verification Successful!</h1>
                 <p>Your email has been successfully verified. You can now log in to your account and start exploring Perplexity.</p>
-                <a href="${FRONTEND_URL}/login" class="btn">Go to Login</a>
+                <a href="https://perplexity-ffm8.onrender.com/login" class="btn">Go to Login</a> 
                 <div class="footer">
-                    <p>Welcome to Perplexity! 🚀</p>
+                    <p>Welcome to Perplexity!</p>
                 </div>
             </div>
         </body>
@@ -437,7 +428,7 @@ export async function verifyEmail(req, res) {
         return res.send(html);
 
     } catch (error) {
-        console.error("❌ Email verification error:", error.message);
+        console.error("Email verification error:", error.message);
         
         const html = `
         <!DOCTYPE html>
@@ -464,7 +455,7 @@ export async function verifyEmail(req, res) {
         </head>
         <body>
             <div class="container">
-                <div class="icon">✕</div>
+                <div class="icon">&#10005;</div>
                 <h1>Verification Failed</h1>
                 <p>The verification link is invalid or has expired. Please register again.</p>
             </div>
@@ -494,7 +485,7 @@ export async function logout(req, res) {
             message: "Logged out successfully"
         });
     } catch (error) {
-        console.error("❌ Logout Error:", error);
+        console.error("Logout Error:", error);
         return res.status(500).json({
             success: false,
             message: "Logout failed"
